@@ -1,5 +1,8 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const express = require("express");
+const login = require("./login");
+const app = express();
+app.use("/auth", login);
 
 const sequelize = new Sequelize("shop", "root", "", {
     host: "localhost",
