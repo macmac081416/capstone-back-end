@@ -28,7 +28,7 @@ app.post("/login", (req, res) => {
             .json({ message: "Incorrect username or password" });
     }
 
-    const token = jwt.sign({ username }, "secretkey");
+    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
 
     res.json({ token });
 });
