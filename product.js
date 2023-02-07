@@ -46,4 +46,9 @@ sequelize
     .catch((error) => {
         console.error("Unable to create table : ", error);
     });
+app.get("/productlist", (req, res) => {
+    Model.findAll()
+        .then((data) => res.json(data))
+        .catch((err) => res.status(400).json("Error: " + err));
+});
 module.exports = { sequelize, table };
