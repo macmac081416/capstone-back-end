@@ -1,25 +1,34 @@
-const express = require("express");
-const router = express.Router();
-const { table } = require("./product");
-const { Sequelize, DataTypes } = require("sequelize");
-const cors = require("cors");
 
-app.use(cors());
-router.post("http://localhost:9000/addproducts", async (req, res) => {
-    try {
-        const { name, price, category, image, description } = req.body;
-        const product = await table.create({
-            name,
-            price,
-            category,
-            image,
-            description,
-        });
-        res.status(201).json(product);
-    } catch (error) {
-        console.error(error);
-        res.status(400).json({ error: "Failed to add product" });
-    }
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('database_name', 'username', 'password', {
+  host: 'localhost',
+  dialect: 'mysql',
 });
 
-module.exports = router;
+
+const User = sequelize.define('User', {
+  firstName: Sequelize.STRING,
+  lastName: Sequelize.STRING,
+  email: Sequelize.STRING,
+  password: Sequelize.STRING,
+});
+
+
+app.post('/submit-form', (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
+
+  User.create({
+    firstName,
+    lastName,
+    email,
+    password,
+  })
+    .then(() => {
+      res.status(200).json({ message: 'User created successfully' });
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(500).json({ message: 'Error creating user' });
+    });
+});
+
