@@ -11,13 +11,9 @@ const User = sequelize.define('User', {
     User.findOne({ where: { email, password } })
       .then(user => {
         if (user) {
-          res.status(200).json({ message: 'Login successful' })
-          {window.location="/home"}
-          ;
+          res.status(200).json({ message: 'Login successful' });
         } else {
-          res.status(401).json({ message: 'Invalid email or password' })
-          {window.location="/signin"}
-          ;
+          res.status(401).json({ message: 'Invalid email or password' });
         }
       })
       .catch(error => {
